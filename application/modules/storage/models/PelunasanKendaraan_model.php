@@ -1,0 +1,111 @@
+<?php
+namespace Model\Storage;
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+use \Model\Storage\Conf as Conf;
+
+class PelunasanKendaraan_model extends Conf
+{
+    protected $table = 'kredit_kendaraan_pelunasan';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'tgl_bayar',
+        'kode',
+        'sisa_kredit',
+        'jml_transfer',
+        'diskon',
+        'denda',
+        'attachment'
+    ];
+
+
+    public function insertPelunasan(array $data)
+    {
+        try {
+            $pelunasan = new PelunasanKendaraan_model();
+            $pelunasan->fill([
+                'tgl_bayar'    => isset($data['tgl_bayar']) ? date("Y-m-d", strtotime($data['tgl_bayar'])) : '',
+                'kode'         => $data['kode'] ?? null,
+                'sisa_kredit'  => isset($data['sisa_kredit']) ? (float)$data['sisa_kredit'] : 0,
+                'jml_transfer' => isset($data['jml_transfer']) ? (float)$data['jml_transfer'] : 0,
+                'diskon'       => isset($data['diskon']) ? (float)$data['diskon'] : 0,
+                'denda'        => isset($data['denda']) ? (float)$data['denda'] : 0,
+                'attachment'   => isset($data['attachment']) ? $data['attachment'] : '',
+            ]);
+            
+            $pelunasan->save();
+
+            return $pelunasan->id; 
+
+        } catch (\Exception $e) {
+            log_message('error', 'Insert Pelunasan Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updatePelunasan(array $data, array $where)
+    {
+        try {
+
+            $pelunasan = PelunasanKendaraan_model::where($where)->first();
+
+            if (!$pelunasan) {
+                return false;
+            }
+
+            $pelunasan->fill([
+                'tgl_bayar'    => isset($data['tgl_bayar']) ? date("Y-m-d", strtotime($data['tgl_bayar'])) : $pelunasan->tgl_bayar,
+                'kode'         => $data['kode'] ?? $pelunasan->kode,
+                'sisa_kredit'  => isset($data['sisa_kredit']) ? (float)$data['sisa_kredit'] : $pelunasan->sisa_kredit,
+                'jml_transfer' => isset($data['jml_transfer']) ? (float)$data['jml_transfer'] : $pelunasan->jml_transfer,
+                'diskon'       => isset($data['diskon']) ? (float)$data['diskon'] : $pelunasan->diskon,
+                'denda'        => isset($data['denda']) ? (float)$data['denda'] : $pelunasan->denda,
+                'attachment'   => isset($data['attachment']) ? $data['attachment'] : '',
+            ]);
+
+            $pelunasan->save();
+
+            return $pelunasan->id;
+
+        } catch (\Exception $e) {
+            log_message('error', 'Update Pelunasan Error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getPelunasanById($id)
+    {
+        try {
+
+            $data = PelunasanKendaraan_model::where('id', $id)->first();
+
+            return $data;
+
+        } catch (\Exception $e) {
+
+            log_message('error', 'Get Pelunasan By ID Error: '.$e->getMessage());
+            return null;
+        }
+    }
+
+
+    public function deletePelunasan(array $where)
+    {
+        try {
+            $pelunasan = PelunasanKendaraan_model::where($where)->first();
+
+            if(!$pelunasan){
+                return false;
+            }
+
+            $pelunasan->delete();
+            return true;
+
+        } catch (\Exception $e) {
+
+            log_message('error', 'Delete Pelunasan Error: '.$e->getMessage());
+            return false;
+        }
+    }
+}

@@ -1,0 +1,121 @@
+.body{
+    padding:1rem;
+}
+
+.filter-area{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+   
+}
+
+.filter-input{
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    justify-content: left;
+    align-items: center;
+}
+
+.input-date{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    gap:10px;
+}
+
+.input-date .icon{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.input-date input{
+    padding-left: 40px;
+    width: 200px;
+}
+
+.input-data{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* gap: 10px; */
+    /* align-items: center; */
+}
+
+.input-data .icon{
+    position: absolute;
+    margin-top: 36px;
+    margin-left: 10px;
+}
+
+.input-data select,
+.input-data input{
+    width: auto;
+}
+
+.form-area{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.rupiah-input{
+    position: relative;
+}
+
+.rupiah-input span{
+    position: absolute;
+    left:10px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size: 12px;
+    color: #737373;
+}
+
+.rupiah-input input{
+    padding-left:35px;
+    border: 1px solid #D6D6D6;
+    height: 33px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 12px;
+    color: #737373;
+    width: 100%;
+}
+
+.table-area {
+    width: 100%;
+    height: 200px;
+    overflow: scroll;
+    position: relative;
+}
+
+.table-area table{
+    font-size: 12px;
+}
+
+.table-body tr:hover{
+    background-color: #EDEDED;
+    cursor: pointer;
+}
+
+.input-area{
+    display: block;                    
+    width: 100%;                       
+    padding: 0.2rem;                   
+    font-size: 0.875rem;               
+    color: #374151;                   
+    border: 1px solid #D1D5DB;        
+    border-radius: 5px;             
+    cursor: pointer;                   
+    background-color: #F9FAFB;         
+    outline: none;                      
+}
+
+.input-area:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
