@@ -118,7 +118,7 @@ let pk = {
                             label: "<i class='fa fa-trash'></i> Hapus",
                             className: "btn-danger",
                             callback: function(){
-                               pk.exec_delete_data(params.pelunasan_id);
+                               pk.exec_delete_data(params.pelunasan_id, params.kode_pelunasan);
                             }
                         }
                     }
@@ -267,7 +267,7 @@ let pk = {
         });
     },
 
-    exec_delete_data : function(pelunasan_id){
+    exec_delete_data : function(pelunasan_id, kode_pelunasan){
 
         bootbox.dialog({
             title: "Konfirmasi",
@@ -289,7 +289,8 @@ let pk = {
                             type : 'POST',
                             dataType : 'json',
                             data : {
-                                pelunasan_id : pelunasan_id
+                                pelunasan_id : pelunasan_id,
+                                kode_pelunasan : kode_pelunasan,
                             },
                             beforeSend : function(){
                                 showLoading(); 

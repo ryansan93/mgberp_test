@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use \Model\Storage\Conf as Conf;
 
-class PelunasanKendaraan_model extends Conf
+class KreditKendaraanPelunasan_model extends Conf
 {
     protected $table = 'kredit_kendaraan_pelunasan';
     protected $primaryKey = 'id';
@@ -23,7 +23,7 @@ class PelunasanKendaraan_model extends Conf
     public function insertPelunasan(array $data)
     {
         try {
-            $pelunasan = new PelunasanKendaraan_model();
+            $pelunasan = new KreditKendaraanPelunasan_model();
             $pelunasan->fill([
                 'tgl_bayar'    => isset($data['tgl_bayar']) ? date("Y-m-d", strtotime($data['tgl_bayar'])) : '',
                 'kode'         => $data['kode'] ?? null,
@@ -51,7 +51,7 @@ class PelunasanKendaraan_model extends Conf
     {
         try {
 
-            $pelunasan = PelunasanKendaraan_model::where($where)->first();
+            $pelunasan = KreditKendaraanPelunasan_model::where($where)->first();
 
             if (!$pelunasan) {
                 return false;
@@ -84,7 +84,7 @@ class PelunasanKendaraan_model extends Conf
     {
         try {
 
-            $data = PelunasanKendaraan_model::where('id', $id)->first();
+            $data = KreditKendaraanPelunasan_model::where('id', $id)->first();
 
             return $data;
 
@@ -99,7 +99,7 @@ class PelunasanKendaraan_model extends Conf
     public function deletePelunasan(array $where)
     {
         try {
-            $pelunasan = PelunasanKendaraan_model::where($where)->first();
+            $pelunasan = KreditKendaraanPelunasan_model::where($where)->first();
 
             if(!$pelunasan){
                 return false;

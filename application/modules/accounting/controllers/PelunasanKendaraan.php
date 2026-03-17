@@ -183,14 +183,18 @@ class PelunasanKendaraan extends Public_Controller
 
             
 
-            $pelunasanModel = new \Model\Storage\PelunasanKendaraan_model();
+            $pelunasanModel = new \Model\Storage\KreditKendaraanPelunasan_model();
             $id = $pelunasanModel->insertPelunasan($dataInsert);
 
             $data_pelunasan = $pelunasanModel->find($id);
-            $deskripsi_log = 'di-submit oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            $deskripsi_log  = 'di-submit oleh ' . $this->userdata['detail_user']['nama_detuser'];
             Modules::run('base/event/save', $data_pelunasan, $deskripsi_log);
 
-            $config = $this->set_status($id, 1);
+            $config         = $this->set_status($id, 1);
+            $lunas          = $this->set_lunas($data['kode_kredit'], 1);
+            // echo "<pre>";
+            // print_r($lunas);
+            // die;
 
             $response['message'] = 1;
 
@@ -227,7 +231,7 @@ class PelunasanKendaraan extends Public_Controller
             ];
 
 
-            $pelunasanModel = new \Model\Storage\PelunasanKendaraan_model();
+            $pelunasanModel = new \Model\Storage\KreditKendaraanPelunasan_model();
             $dataLama       = $pelunasanModel->getPelunasanById($pelunasan_id);
             // echo "<pre>";
             // print_r($pelunasan_id);
@@ -277,12 +281,14 @@ class PelunasanKendaraan extends Public_Controller
                 'id' => $pelunasan_id
             ];
 
-            $config = $this->set_status($pelunasan_id, 2);
+            $config         = $this->set_status($pelunasan_id, 2);
             $pelunasanModel->updatePelunasan($dataUpdate, $where);
 
             $data_pelunasan = $pelunasanModel->find($pelunasan_id);
-            $deskripsi_log = 'di-update oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            $deskripsi_log  = 'di-update oleh ' . $this->userdata['detail_user']['nama_detuser'];
             Modules::run('base/event/update', $data_pelunasan, $deskripsi_log);
+
+            $lunas          = $this->set_lunas($dataUpdate['kode_kredit'], 1);
 
             $response['message'] = 1;
 
@@ -431,12 +437,14 @@ class PelunasanKendaraan extends Public_Controller
         $response = ['message' => 0, 'error' => ''];
 
         try {
-            $pelunasan_id = $this->input->post('pelunasan_id', true);
+            $pelunasan_id   = $this->input->post('pelunasan_id', true);
+            $kode_pelunasan = $this->input->post('kode_pelunasan', true);
+            
             if(!$pelunasan_id){
                 throw new Exception("ID tidak ditemukan");
             }
 
-            $pelunasanModel = new \Model\Storage\PelunasanKendaraan_model();
+            $pelunasanModel = new \Model\Storage\KreditKendaraanPelunasan_model();
 
             $data = $pelunasanModel->getPelunasanById($pelunasan_id);
             if(!$data){
@@ -458,9 +466,11 @@ class PelunasanKendaraan extends Public_Controller
 
             if($config){
                 $data_pelunasan = $pelunasanModel->find($pelunasan_id);
-                $delete = $pelunasanModel->deletePelunasan($where);
-                $deskripsi_log = 'di-delete oleh ' . $this->userdata['detail_user']['nama_detuser'];
+                $delete         = $pelunasanModel->deletePelunasan($where);
+                $deskripsi_log  = 'di-delete oleh ' . $this->userdata['detail_user']['nama_detuser'];
                 Modules::run('base/event/delete', $data_pelunasan, $deskripsi_log);
+
+                $lunas          = $this->set_lunas($kode_pelunasan, 0);
 
                 if(!$delete){
                     throw new Exception("Data gagal dihapus");
@@ -491,6 +501,18 @@ class PelunasanKendaraan extends Public_Controller
         }
 
         return $config;
+    }
+
+
+    public function set_lunas($kode, $status)
+    {
+        $m_kk = new \Model\Storage\KreditKendaraan_model();
+
+        $update = $m_kk->where('kode', $kode)->update([
+            'lunas' => $status
+        ]);
+
+        return $update ? true : false;
     }
 
 }
