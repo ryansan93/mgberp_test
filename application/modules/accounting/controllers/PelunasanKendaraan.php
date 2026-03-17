@@ -181,8 +181,16 @@ class PelunasanKendaraan extends Public_Controller
                 'attachment'   => $uploadedFileName 
             ];
 
+            
+
             $pelunasanModel = new \Model\Storage\PelunasanKendaraan_model();
             $id = $pelunasanModel->insertPelunasan($dataInsert);
+
+            $data_pelunasan = $pelunasanModel->find($id);
+            $deskripsi_log = 'di-submit oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            Modules::run('base/event/save', $data_pelunasan, $deskripsi_log);
+
+            $config = $this->set_status($id, 1);
 
             $response['message'] = 1;
 
@@ -269,7 +277,12 @@ class PelunasanKendaraan extends Public_Controller
                 'id' => $pelunasan_id
             ];
 
+            $config = $this->set_status($pelunasan_id, 2);
             $pelunasanModel->updatePelunasan($dataUpdate, $where);
+
+            $data_pelunasan = $pelunasanModel->find($pelunasan_id);
+            $deskripsi_log = 'di-update oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            Modules::run('base/event/update', $data_pelunasan, $deskripsi_log);
 
             $response['message'] = 1;
 
@@ -441,9 +454,17 @@ class PelunasanKendaraan extends Public_Controller
                 'id' => $pelunasan_id
             ];
 
-            $delete = $pelunasanModel->deletePelunasan($where);
-            if(!$delete){
-                throw new Exception("Data gagal dihapus");
+            $config = $this->set_status($pelunasan_id, 3);
+
+            if($config){
+                $data_pelunasan = $pelunasanModel->find($pelunasan_id);
+                $delete = $pelunasanModel->deletePelunasan($where);
+                $deskripsi_log = 'di-delete oleh ' . $this->userdata['detail_user']['nama_detuser'];
+                Modules::run('base/event/delete', $data_pelunasan, $deskripsi_log);
+
+                if(!$delete){
+                    throw new Exception("Data gagal dihapus");
+                }
             }
 
             $response['message'] = 1;
@@ -453,6 +474,23 @@ class PelunasanKendaraan extends Public_Controller
         }
 
         echo json_encode($response);
+    }
+
+
+
+    public function set_status($id, $status)
+    {
+        $config = false;
+
+        $m_conf = new \Model\Storage\Conf();
+        $sql = "EXEC insert_jurnal null, null, null, null, 'kredit_kendaraan_pelunasan', ?, ?, ?";
+        $d_conf = $m_conf->hydrateRaw($sql, [$id, $id, $status]);
+
+        if ($d_conf) {
+            $config = true;
+        }
+
+        return $config;
     }
 
 }

@@ -36,6 +36,9 @@ class PelunasanKendaraan_model extends Conf
             
             $pelunasan->save();
 
+            // $deskripsi_log = 'di-submit oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            // Modules::run( 'base/event/save', $pelunasan, $deskripsi_log );
+
             return $pelunasan->id; 
 
         } catch (\Exception $e) {
@@ -65,6 +68,9 @@ class PelunasanKendaraan_model extends Conf
             ]);
 
             $pelunasan->save();
+
+            // $deskripsi_log = 'di-update oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            // Modules::run( 'base/event/update', $pelunasan, $deskripsi_log );
 
             return $pelunasan->id;
 
@@ -100,6 +106,9 @@ class PelunasanKendaraan_model extends Conf
             }
 
             $pelunasan->delete();
+
+            // $deskripsi_log = 'di-delete oleh ' . $this->userdata['detail_user']['nama_detuser'];
+            // Modules::run( 'base/event/delete', $pelunasan, $deskripsi_log );
             return true;
 
         } catch (\Exception $e) {
@@ -108,4 +117,7 @@ class PelunasanKendaraan_model extends Conf
             return false;
         }
     }
+
+
+   
 }
