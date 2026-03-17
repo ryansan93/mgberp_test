@@ -83,13 +83,20 @@ class KreditKendaraanPelunasan_model extends Conf
     public function getPelunasanById($id)
     {
         try {
-
             $data = KreditKendaraanPelunasan_model::where('id', $id)->first();
-
             return $data;
-
         } catch (\Exception $e) {
+            log_message('error', 'Get Pelunasan By ID Error: '.$e->getMessage());
+            return null;
+        }
+    }
 
+    public function getPelunasanByKode($kode)
+    {
+        try {
+            $data = KreditKendaraanPelunasan_model::where('kode', $kode)->first();
+            return $data;
+        } catch (\Exception $e) {
             log_message('error', 'Get Pelunasan By ID Error: '.$e->getMessage());
             return null;
         }

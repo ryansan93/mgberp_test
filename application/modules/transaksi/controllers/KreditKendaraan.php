@@ -287,19 +287,33 @@ class KreditKendaraan extends Public_Controller {
     {
         $params = $this->input->get('params');
 
-        $data = null;
         $m_kk = new \Model\Storage\KreditKendaraan_model();
-        if ( $params == 'all' ) {
+
+        if ($params == 'all') {
             $d_kk = $m_kk->with(['d_perusahaan', 'd_unit', 'd_peruntukan', 'detail'])->get();
-            if ( $d_kk->count() > 0 ) {
-                $data = $d_kk->toArray();
-            }
         } else {
-            $d_kk = $m_kk->where('lunas', $params)->with(['d_perusahaan', 'd_unit', 'd_peruntukan', 'detail'])->get();
-            if ( $d_kk->count() > 0 ) {
-                $data = $d_kk->toArray();
+            $d_kk = $m_kk->where('lunas', $params)
+                        ->with(['d_perusahaan', 'd_unit', 'd_peruntukan', 'detail'])
+                        ->get();
+        }
+
+        $data = [];
+
+        if ($d_kk->count() > 0) {
+
+            $data = $d_kk->toArray();
+
+            $m_pelunasan = new \Model\Storage\KreditKendaraanPelunasan_model();
+
+            foreach ($data as $key => $val) {
+                $dt_pelunasan = $m_pelunasan->getPelunasanByKode($val['kode']);
+                $data[$key]['pelunasan'] = !empty($dt_pelunasan) ? $dt_pelunasan->toArray() : [];
             }
         }
+        
+        // echo "<pre>";
+        // print_r($data);
+        // die;
 
         $content['data'] = $data;
         $html = $this->load->view($this->pathView.'list', $content, TRUE);
