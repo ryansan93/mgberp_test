@@ -53,9 +53,9 @@
 						<?php if ( !empty($value['pelunasan']) ){ ?>
 							<tr>
 								<td class="text-left">PELUNASAN</td>
-								<td class="text-center"><?php echo strtoupper(tglIndonesia($value['pelunasan']['tgl_bayar'], '-', ' ')) ?></td><td class="text-center"><?php echo strtoupper(tglIndonesia($value['pelunasan']['tgl_bayar'])) ?></td>
+								<td class="text-center"><?php echo strtoupper(tglIndonesia($value['pelunasan']['tgl_bayar'])) ?></td>
 								<td class="text-right"><?php echo angkaDecimal($value['pelunasan']['jml_transfer']) ?></td>
-								<td class="text-center"><?php echo strtoupper(tglIndonesia($value['pelunasan']['tgl_bayar'], '-', ' ')) ?></td>
+								<td class="text-center"><?php echo strtoupper(tglIndonesia($value['pelunasan']['tgl_bayar'])) ?></td>
 							</tr>
 						<?php } ?>
 						
