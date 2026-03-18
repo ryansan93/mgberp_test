@@ -534,14 +534,14 @@ pk.start_up();
 $(document).ready(function(){
 
     $("#startdate").datepicker({
-        dateFormat: "dd-mm-yy",
+        dateFormat: "dd M yy",
         changeMonth: true,
         changeYear: true
     }).datepicker("setDate", new Date());
 
 
     $("#enddate").datepicker({
-        dateFormat: "dd-mm-yy",
+        dateFormat: "dd M yy",
         changeMonth: true,
         changeYear: true
     }).datepicker("setDate", new Date());

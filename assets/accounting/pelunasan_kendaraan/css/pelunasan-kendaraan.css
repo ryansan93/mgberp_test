@@ -119,3 +119,21 @@
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
+
+.ui-datepicker-month{
+    color :rgb(101, 101, 101) !important;
+}
+
+.ui-datepicker-month option{
+    color :rgb(101, 101, 101) !important;
+}
+
+
+.ui-datepicker-year{
+    color :rgb(101, 101, 101) !important;
+}
+
+.ui-datepicker-year option{
+    color :rgb(101, 101, 101) !important;
+}
+

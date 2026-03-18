@@ -3,7 +3,7 @@
     <div class="input-data">
         <label for="" style="width:150px">Tgl. Bayar</label>
         <i class="icon fa fa-calendar"></i>
-        <input type="text" value="<?php echo $detail['tgl_bayar'] ?>" style="padding-left: 40px; cursor:pointer;" class="form form-control" disabled name="" id="tgl_bayar">
+        <input type="text" value="<?php echo tglIndonesia($detail['tgl_bayar']) ?>" style="padding-left: 40px; cursor:pointer;" class="form form-control" disabled name="" id="tgl_bayar">
     </div>
     <div class="input-data">
         <label for="" style="width:150px">Kode Kredit</label>

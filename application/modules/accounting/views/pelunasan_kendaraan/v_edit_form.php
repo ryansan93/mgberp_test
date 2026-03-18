@@ -3,7 +3,7 @@
     <div class="input-data">
         <label for="" style="width:150px">Tgl. Bayar</label>
         <i class="icon fa fa-calendar"></i>
-        <input type="text" style="padding-left: 40px; cursor:pointer;" value="<?php echo $edit['tgl_bayar']?>" class="form form-control" readonly name="" id="tgl_bayar">
+        <input type="text" style="padding-left: 40px; cursor:pointer;" value="<?php echo tglIndonesia($edit['tgl_bayar']) ?>" class="form form-control" readonly name="" id="tgl_bayar">
     </div>
     <div class="input-data">
         <label for="" style="width:150px">Kode Kredit</label>
@@ -53,8 +53,8 @@
     </div>
 
     <?php 
-        $diskon = $edit['diskon'] > 0 ? $edit['diskon'] : 0;
-        $denda  = $edit['denda'] > 0 ? $edit['denda'] : 0;
+        $diskon = $edit['diskon'] > 0 ? number_format((float)$edit['diskon'],0,',','.') : 0;
+        $denda  = $edit['denda'] > 0 ? number_format((float)$edit['denda'],0,',','.') : 0;
     ?>
     <div class="input-data">
         <label for="" style="width:150px">Diskon</label>
@@ -85,10 +85,10 @@
     $(document).ready(function(){
 
         $("#tgl_bayar").datepicker({
-            dateFormat: "dd-mm-yy",
+            dateFormat: "dd M yy",
             changeMonth: true,
             changeYear: true
-        }).datepicker("setDate", new Date());
+        });
         
         $("#kode_kredit").select2({
             placeholder: "Pilih Kode Kredit",
