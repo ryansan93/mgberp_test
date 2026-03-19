@@ -57,6 +57,7 @@ class KreditKendaraanPelunasan_model extends Conf
                 return false;
             }
 
+
             $pelunasan->fill([
                 'tgl_bayar'    => isset($data['tgl_bayar']) ? date("Y-m-d", strtotime($data['tgl_bayar'])) : $pelunasan->tgl_bayar,
                 'kode'         => $data['kode'] ?? $pelunasan->kode,

@@ -72,9 +72,10 @@
     $(document).ready(function(){
 
         $("#tgl_bayar").datepicker({
-            dateFormat: "dd-mm-yy",
+            dateFormat: "dd M yy",
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            altFormat: "yy-mm-dd"
         }).datepicker("setDate", new Date());
         
         $("#kode_kredit").select2({

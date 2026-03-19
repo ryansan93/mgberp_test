@@ -382,7 +382,7 @@ let pk = {
 
                                 let params = {
                                     pelunasan_id : pelunasan_id,
-                                    tgl_bayar : $("#tgl_bayar").val(),
+                                    tgl_bayar : $("#tgl_bayar_val").val(),
                                     kode_kredit : $("#kode_kredit").val(),
                                     perusahaan : $("#perusahaan").attr("kode_perusahaan"),
                                     merk_jenis : $("#merk_jenis").val(),
@@ -533,17 +533,31 @@ pk.start_up();
 
 $(document).ready(function(){
 
+    let today = new Date();
+
     $("#startdate").datepicker({
         dateFormat: "dd M yy",
         changeMonth: true,
-        changeYear: true
-    }).datepicker("setDate", new Date());
+        changeYear: true,
+        altFormat: "yy-mm-dd",
+        onSelect: function() {
+            let startDate = $(this).datepicker("getDate");
+            let endDate = $("#enddate").datepicker("getDate");
 
+            $("#enddate").datepicker("option", "minDate", startDate);
+
+            if (endDate < startDate) {
+                $("#enddate").datepicker("setDate", startDate);
+            }
+        }
+    }).datepicker("setDate", today);
 
     $("#enddate").datepicker({
         dateFormat: "dd M yy",
         changeMonth: true,
-        changeYear: true
-    }).datepicker("setDate", new Date());
+        changeYear: true,
+        altFormat: "yy-mm-dd"
+    }).datepicker("setDate", today);
 
+    $("#enddate").datepicker("option", "minDate", $("#startdate").datepicker("getDate"));
 });

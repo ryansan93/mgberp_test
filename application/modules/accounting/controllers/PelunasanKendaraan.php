@@ -209,10 +209,7 @@ class PelunasanKendaraan extends Public_Controller
     
         $response = ['message' => 0, 'error' => ''];
 
-        // echo "<pre>";
-        // print_r($_POST);
-        // die;
-
+     
         try {
             $pelunasan_id = $this->input->post('pelunasan_id', true);
 
@@ -267,8 +264,10 @@ class PelunasanKendaraan extends Public_Controller
                 }
             }
 
+                
+
             $dataUpdate = [
-                'tgl_bayar'    => $data['tgl_bayar'],
+                'tgl_bayar'    => date("Y-m-d", strtotime($data['tgl_bayar'])),
                 'kode'         => $data['kode_kredit'],
                 'sisa_kredit'  => $data['sisa_kredit'],
                 'jml_transfer' => $data['jml_transfer'],
@@ -276,6 +275,7 @@ class PelunasanKendaraan extends Public_Controller
                 'denda'        => $data['denda'],
                 'attachment'   => $attachment
             ];
+       
 
             $where = [
                 'id' => $pelunasan_id
@@ -424,9 +424,7 @@ class PelunasanKendaraan extends Public_Controller
         $data['kode_kredit'] = $data_temp;
 
 
-        // echo "<pre>";
-        // print_r($data);
-        // die;
+       
      
         echo $this->load->view($this->pathView . 'v_edit_form', $data, true);
 
@@ -439,6 +437,8 @@ class PelunasanKendaraan extends Public_Controller
         try {
             $pelunasan_id   = $this->input->post('pelunasan_id', true);
             $kode_pelunasan = $this->input->post('kode_pelunasan', true);
+
+       
             
             if(!$pelunasan_id){
                 throw new Exception("ID tidak ditemukan");

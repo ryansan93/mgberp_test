@@ -3,7 +3,8 @@
     <div class="input-data">
         <label for="" style="width:150px">Tgl. Bayar</label>
         <i class="icon fa fa-calendar"></i>
-        <input type="text" style="padding-left: 40px; cursor:pointer;" value="<?php echo tglIndonesia($edit['tgl_bayar']) ?>" class="form form-control" readonly name="" id="tgl_bayar">
+        <input type="text" style="padding-left: 40px; cursor:pointer;" value="<?php echo tglIndonesia($edit['tgl_bayar'], '-', ' ', true); ?> " class="form form-control" readonly name="" id="tgl_bayar">
+        <input type="hidden" id="tgl_bayar_val">
     </div>
     <div class="input-data">
         <label for="" style="width:150px">Kode Kredit</label>
@@ -85,9 +86,11 @@
     $(document).ready(function(){
 
         $("#tgl_bayar").datepicker({
-            dateFormat: "dd M yy",
+            dateFormat: "dd MM yy",      
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            altField: "#tgl_bayar_val",   
+            altFormat: "yy-mm-dd"          
         });
         
         $("#kode_kredit").select2({
